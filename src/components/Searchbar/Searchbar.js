@@ -9,7 +9,14 @@ import {
 export const Searchbar = ({ onSearchExpression }) => {
   return (
     <StyledSearchbar>
-      <StyledForm onSubmit={onSearchExpression}>
+      <StyledForm
+        onSubmit={evt => {
+          evt.preventDefault();
+          const form = evt.currentTarget;
+          const query = form.elements.query.value;
+          return onSearchExpression(query);
+        }}
+      >
         <StyledFormButton type="submit">
           <StyledFormButtonLabel>Search</StyledFormButtonLabel>
         </StyledFormButton>

@@ -19,12 +19,13 @@ export class App extends Component {
   };
 
   // запрос с Searchbar формы
-  onSearchExpression = evt => {
-    evt.preventDefault();
-    const form = evt.currentTarget;
-    const query = form.elements.query.value;
-
-    this.setState({ query: query });
+  onSearchExpression = query => {
+    console.log(query);
+    this.setState({
+      query: query,
+      images: [],
+      page: 1,
+    });
   };
 
   async fetchImagesOnQuery() {
@@ -47,15 +48,11 @@ export class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.query !== prevState.query) {
-      this.setState({ images: [] });
+    if (
+      this.state.query !== prevState.query ||
+      this.state.page !== prevState.page
+    )
       this.fetchImagesOnQuery();
-      return;
-    }
-
-    if (this.state.page !== prevState.page) {
-      this.fetchImagesOnQuery();
-    }
   }
 
   onLoadMore = () => {
